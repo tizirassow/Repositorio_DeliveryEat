@@ -1,0 +1,55 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  background-color: #f0f0f0;
+  font-family: Roboto, 'Helvetice New', 'Arial', sans-serif
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+div.container {
+  margin: 0px 40px;
+}
+
+.fill-remainging-space {
+  flex: 1 1 auto;
+}
+
+.normal-form {
+  margin: 10px;
+}
+
+.example-card {
+  max-width: 30vw;
+
+}
+
+.mat-icon{
+  font-size: 1.2em;
+}
+
+.example-header-image {
+  background-image: url('https://www.caseratto.com.ar/img/nuestraempresa.jpg');
+  background-size: cover;
+}
+
+.card-img {
+
+}
+
+agm-map {
+  height: 300px;
+}
+
