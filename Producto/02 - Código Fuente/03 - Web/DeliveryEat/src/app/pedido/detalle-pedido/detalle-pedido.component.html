@@ -1,0 +1,171 @@
+<!-- Card container that binds all togather -->
+<mat-card>
+  <!-- Title of an Card -->
+  <mat-card-title>
+    Detalle de pedido
+  </mat-card-title>
+
+  <!-- Actual content starts from here -->
+
+  <mat-horizontal-stepper>
+    <mat-step>
+    <mat-card-content>
+      <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value)">
+
+        <table>
+          <tr>
+            <td>
+              <mat-form-field class="demo-full-width">
+              <textarea formControlName="Direccion" matInput placeholder="Dirección de envío" matTextareaAutosize
+                        matAutosizeMinRows="2" matAutosizeMaxRows="5">
+              </textarea>
+              </mat-form-field>
+              <mat-icon color="primary">location_on</mat-icon>
+
+              <mat-error>
+                <span *ngIf="!regiForm.get('Direccion').valid && regiForm.get('Direccion').touched">Por favor, ingresá la dirección</span>
+              </mat-error>
+            </td>
+          <tr>
+            <td colspan="2">
+              <mat-form-field class="demo-full-width">
+                <input formControlName="FechaEntrega" matInput [matDatepicker]="picker"
+                       placeholder="Fecha de entrega">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #picker></mat-datepicker>
+              </mat-form-field>
+              <mat-error>
+                <span *ngIf="!regiForm.get('FechaEntrega').valid && regiForm.get('FechaEntrega').touched">Please select any Date !!!</span>
+              </mat-error>
+            </td>
+            <!--</tr>-->
+          <tr>
+            <td>
+              <mat-form-field>
+                <mat-select formControlName="FormaPago" placeholder="Forma de pago">
+                  <mat-option>-- Seleccionar --</mat-option>
+                  <mat-option value="usaEfectivo">Efectivo</mat-option>
+                  <mat-option value="usaTarjeta">Tarjeta de crédito</mat-option>
+                </mat-select>
+                <mat-hint>Tarjetas únicamente VISA</mat-hint>
+                <mat-error>
+                <span
+                  *ngIf="!regiForm.get('FormaPago').valid && regiForm.get('FormaPago').touched">Por favor, seleccione forma de pago.</span>
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+
+          <tr *ngIf="regiForm.get('FormaPago').value=='usaEfectivo'">
+            <!--<td colspan="2">-->
+            <mat-form-field class="demo-full-width">
+              <textarea formControlName="PagoCon" matInput placeholder="¿Con cuánto vas a pagar?" matTextareaAutosize
+                        matAutosizeMinRows="2" matAutosizeMaxRows="5">
+              </textarea>
+            </mat-form-field>
+            <mat-icon color="primary">attach_money</mat-icon>
+
+            <mat-error>
+              <span *ngIf="!regiForm.get('PagoCon').valid && regiForm.get('PagoCon').touched">Por favor, ingresá la cantidad con la que vas a abonar</span>
+            </mat-error>
+            <!--</td>-->
+          </tr>
+          <tr *ngIf="regiForm.get('FormaPago').value=='usaTarjeta'">
+            <!--<td colspan="2">-->
+            <mat-form-field class="demo-full-width">
+
+              <input matInput formControlName="NumeroTarjeta" placeholder="Número de tarjeta" autocomplete="cc-number"
+                     id="cc-number" ccNum>
+
+            </mat-form-field>
+            <mat-icon color="primary">attach_money</mat-icon>
+
+            <mat-error>
+              <span *ngIf="!regiForm.get('NumeroTarjeta').valid && regiForm.get('NumeroTarjeta').touched">Por favor, ingresá el número de tu tarjeta VISA</span>
+            </mat-error>
+            <!--</td>-->
+          </tr>
+          <tr *ngIf="regiForm.get('FormaPago').value=='usaTarjeta'">
+            <!--<td colspan="2">-->
+            <mat-form-field class="demo-full-width">
+
+              <input matInput formControlName="NombreTarjeta" placeholder="Nombre del titular"
+                     autocomplete="cc-number">
+
+            </mat-form-field>
+            <mat-icon color="primary">attach_money</mat-icon>
+
+            <mat-error>
+              <span *ngIf="!regiForm.get('NombreTarjeta').valid && regiForm.get('NombreTarjeta').touched">Por favor, ingresá el nombre como figura en la tarjeta</span>
+            </mat-error>
+            <!--</td>-->
+          </tr>
+          <tr *ngIf="regiForm.get('FormaPago').value=='usaTarjeta'">
+            <!--<td colspan="2">-->
+            <mat-form-field class="demo-full-width">
+
+              <input matInput type="tel" formControlName="FechaExp" placeholder="MM/YY" autocomplete="cc-exp"
+                     id="cc-exp"
+                     ccExp>
+
+            </mat-form-field>
+            <mat-icon color="primary">attach_money</mat-icon>
+
+            <mat-error>
+              <span *ngIf="!regiForm.get('FechaExp').valid && regiForm.get('FechaExp').touched">Por favor, ingresá la fecha de expiración de tu tarjeta</span>
+            </mat-error>
+            <!--</td>-->
+          </tr>
+          <tr *ngIf="regiForm.get('FormaPago').value=='usaTarjeta'">
+            <!--<td colspan="2">-->
+            <mat-form-field class="demo-full-width">
+
+              <input matInput formControlName="CodigoSeg" placeholder="XXX" autocomplete="cc-cvc" id="cc-csc" ccCvc>
+
+            </mat-form-field>
+            <mat-icon color="primary">attach_money</mat-icon>
+
+            <mat-error>
+              <span *ngIf="!regiForm.get('CodigoSeg').valid && regiForm.get('CodigoSeg').touched">Por favor, ingresá el código de seguridad de tu tarjeta</span>
+            </mat-error>
+            <!--</td>-->
+          </tr>
+
+          <tr>
+            <td colspan="2">
+              <mat-form-field class="demo-full-width">
+                <input formControlName="Email" matInput placeholder="Email">
+                <mat-hint>Usar e-mail valido, por ejemplo : direccion@mail.com</mat-hint>
+                <mat-error>
+                <span
+                  *ngIf="!regiForm.get('Email').valid && regiForm.get('Email').touched">Ingrese un e-mail correcto</span>
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+          <br>
+          <tr>
+            <td colspan="2">
+              <mat-slide-toggle formControlName="IsAccepted" (change)="OnChanges($event)">Aceptar términos y
+                condiciones
+              </mat-slide-toggle>
+            </td>
+          </tr>
+          <tr></tr>
+          <tr>
+            <td colspan="2" class="content-center">
+              <button mat-raised-button color="accent" [disabled]="!regiForm.valid || IsAccepted==0" matStepperNext>
+                Confirmar Pedido
+              </button>
+            </td>
+          </tr>
+          <tr>
+          </tr>
+        </table>
+      </form>
+    </mat-card-content>
+  </mat-step>
+  <mat-step>
+  </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>
