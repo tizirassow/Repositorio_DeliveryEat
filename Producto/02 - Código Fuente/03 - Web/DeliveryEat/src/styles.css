@@ -36,12 +36,12 @@ div.container {
 
 }
 
-.mat-icon{
+.mat-icon {
   font-size: 1.2em;
 }
 
 .example-header-image {
-  background-image: url('src/app/img/caseratto.jpg');
+  background-image: url("src/app/img/caseratto.jpg");
   background-size: cover;
 }
 
@@ -53,7 +53,7 @@ tr.mat-footer-row {
   font-weight: bold;
 }
 
-.material-confirmation-icon{
+.material-confirmation-icon {
   color: #00C853;
   font-size: 15vw;
 }
