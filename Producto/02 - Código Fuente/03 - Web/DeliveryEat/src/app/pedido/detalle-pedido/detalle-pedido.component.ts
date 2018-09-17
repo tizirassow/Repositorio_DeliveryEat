@@ -25,8 +25,7 @@ export class DetallePedidoComponent {
   displayedColumns: string[] = ['item', 'cost'];
   transactions: Transaction[] = [
     {item: 'Kilo de helado', cost: 250, notas: 'Sabores: Ferrero Rocher, Tramontana'},
-    {item: 'Bombón escocés - 6u', cost: 150, notas: ''},
-    {item: 'Frisbee', cost: 2, notas: ''}
+    {item: 'Bombón escocés - 6u', cost: 150, notas: ''}
   ];
 
   constructor(private fb: FormBuilder) {
@@ -36,6 +35,7 @@ export class DetallePedidoComponent {
     this.regiForm = fb.group({
       'Direccion': [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
       'FechaEntrega': [null, Validators.required],
+      'HoraEntrega': [null, Validators.required],
       'FormaPago': [null, Validators.required],
       'PagoCon': [null, Validators.min(0)],
       'NumeroTarjeta': [null, CreditCardValidator.validateCardNumber],

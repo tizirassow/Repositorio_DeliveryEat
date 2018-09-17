@@ -4,48 +4,13 @@
   </mat-card-title>
 
   <mat-card-content>
-    <mat-horizontal-stepper>
+    <mat-grid-list cols="6">
+      <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-vertical-stepper>
 
 
-      <mat-step>
-        <mat-grid-list cols="6">
-          <mat-grid-tile [colspan]="4" [rowspan]="2">
-            <mat-card class="example-card">
-              <mat-card-header>
-                <div mat-card-avatar class="example-header-image"></div>
-                <mat-card-title>Caseratto</mat-card-title>
-                <mat-card-subtitle>Helados</mat-card-subtitle>
-              </mat-card-header>
-              <mat-card-content>
-                <table mat-table [dataSource]="transactions" class="mat-elevation-z8">
-                  <!-- Item Column -->
-                  <ng-container matColumnDef="item">
-                    <th mat-header-cell *matHeaderCellDef> Producto</th>
-                    <td mat-cell *matCellDef="let transaction"> {{transaction.item}}</td>
-                    <td mat-footer-cell *matFooterCellDef> Total</td>
-                  </ng-container>
+          <mat-step label="Envío">
 
-                  <!-- Cost Column -->
-                  <ng-container matColumnDef="cost">
-                    <th mat-header-cell *matHeaderCellDef> Precio</th>
-                    <td mat-cell *matCellDef="let transaction"> {{transaction.cost | currency}}</td>
-                    <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}}</td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="notas">
-                    <th mat-header-cell *matHeaderCellDef> Notas</th>
-                    <td mat-cell *matCellDef="let transaction"> {{transaction.notas | currency}}</td>
-                  </ng-container>
-
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-                </table>
-              </mat-card-content>
-
-            </mat-card>
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="2" [rowspan]="2">
             <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value)">
               <table>
                 <tr>
@@ -58,22 +23,61 @@
                     <mat-icon color="primary">place</mat-icon>
 
                     <mat-error>
-                      <span color="warm" *ngIf="!regiForm.get('Direccion').valid && regiForm.get('Direccion').touched">Por favor, ingresá la dirección</span>
+                        <span color="warm"
+                              *ngIf="!regiForm.get('Direccion').valid && regiForm.get('Direccion').touched">Por favor, ingresá la dirección</span>
                     </mat-error>
                   </td>
                 <tr>
+                  <td>
+                    <mat-slide-toggle formControlName="IsAccepted" (change)="OnChanges($event)">Fecha y hora específica
+                    </mat-slide-toggle>
+                  </td>
+                </tr>
+                <tr><br></tr>
+                <tr *ngIf="IsAccepted == 1">
                   <td colspan="2">
                     <mat-form-field class="demo-full-width">
+
                       <input formControlName="FechaEntrega" matInput [matDatepicker]="picker"
                              placeholder="Fecha de entrega">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #picker></mat-datepicker>
                     </mat-form-field>
                     <mat-error>
-                      <span *ngIf="!regiForm.get('FechaEntrega').valid && regiForm.get('FechaEntrega').touched">Please select any Date !!!</span>
+                      <span *ngIf="!regiForm.get('FechaEntrega').valid && regiForm.get('FechaEntrega').touched">Por favor, seleccioná una fecha</span>
                     </mat-error>
-                  </td>
-                  <!--</tr>-->
+                <tr><br></tr>
+                <tr>
+                  <mat-form-field>
+                  <mat-select formControlName="HoraEntrega" placeholder="Hora" maxlength="2">
+                    <mat-option></mat-option>
+                    <mat-option value="08">08</mat-option>
+                    <mat-option value="09">09</mat-option>
+                    <mat-option value="10">10</mat-option>
+                    <mat-option value="11">11</mat-option>
+                    <mat-option value="12">12</mat-option>
+                    <mat-option value="13">13</mat-option>
+                    <mat-option value="14">14</mat-option>
+                    <mat-option value="15">15</mat-option>
+                    <mat-option value="16">16</mat-option>
+                    <mat-option value="17">17</mat-option>
+                    <mat-option value="18">18</mat-option>
+                    <mat-option value="19">19</mat-option>
+                    <mat-option value="20">20</mat-option>
+                  </mat-select>
+                  </mat-form-field>
+
+                </tr>
+
+              </table>
+            </form>
+            <button mat-raised-button matStepperNext>Siguiente</button>
+          </mat-step>
+
+
+          <mat-step label="Pago">
+            <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value)">
+              <table>
                 <tr>
                   <td>
                     <mat-form-field>
@@ -85,7 +89,7 @@
                       <mat-hint>Tarjetas únicamente VISA</mat-hint>
                       <mat-error>
                 <span
-                  *ngIf="!regiForm.get('FormaPago').valid && regiForm.get('FormaPago').touched">Por favor, seleccione forma de pago.</span>
+                  *ngIf="!regiForm.get('FormaPago').valid && regiForm.get('FormaPago').touched">Por favor, seleccioná una forma de pago.</span>
                       </mat-error>
                     </mat-form-field>
                   </td>
@@ -139,7 +143,7 @@
                   <!--<td colspan="2">-->
                   <mat-form-field class="demo-full-width">
 
-                    <input matInput type="tel" formControlName="FechaExp" placeholder="MM/YY" autocomplete="cc-exp"
+                    <input matInput type="tel" formControlName="FechaExp" placeholder="MM/AA" autocomplete="cc-exp"
                            id="cc-exp"
                            ccExp>
 
@@ -166,6 +170,16 @@
                   </mat-error>
                   <!--</td>-->
                 </tr>
+
+              </table>
+            </form>
+            <!--<mat-icon class="material-confirmation-icon">check_circle</mat-icon>-->
+
+          </mat-step>
+
+          <mat-step label="Confirmación">
+            <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value)">
+              <table>
                 <tr>
                   <td colspan="2">
                     <mat-slide-toggle formControlName="IsAccepted" (change)="OnChanges($event)">Aceptar términos y
@@ -186,18 +200,50 @@
                 </tr>
               </table>
             </form>
-          </mat-grid-tile>
-
-        </mat-grid-list>
-      </mat-step>
 
 
-      <mat-step>
+          </mat-step>
 
-        <mat-icon class="material-confirmation-icon">check_circle</mat-icon>
+        </mat-vertical-stepper>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="4" [rowspan]="2">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>Caseratto</mat-card-title>
+            <mat-card-subtitle>Helados</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <table mat-table [dataSource]="transactions" class="mat-elevation-z8">
+              <!-- Item Column -->
+              <ng-container matColumnDef="item">
+                <th mat-header-cell *matHeaderCellDef> Producto</th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.item}}</td>
+                <td mat-footer-cell *matFooterCellDef> Total</td>
+              </ng-container>
+
+              <!-- Cost Column -->
+              <ng-container matColumnDef="cost">
+                <th mat-header-cell *matHeaderCellDef> Precio</th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.cost | currency}}</td>
+                <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="notas">
+                <th mat-header-cell *matHeaderCellDef> Notas</th>
+                <td mat-cell *matCellDef="let transaction"> {{transaction.notas | currency}}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+            </table>
+          </mat-card-content>
+
+        </mat-card>
+      </mat-grid-tile>
 
 
-      </mat-step>
-    </mat-horizontal-stepper>
+    </mat-grid-list>
   </mat-card-content>
 </mat-card>
