@@ -11,10 +11,10 @@ import {CreditCardValidator} from 'ngx-credit-cards';
 export class DetallePedidoComponent {
 
   regiForm: FormGroup;
+  cardForm: FormGroup;
   Direccion: '';
   FechaEentrega: Date = null;
-  Blog: '';
-  Email: '';
+  FormaPago: '';
   NumeroTarjeta: '';
   NombreTarjeta: '';
   FechaExp: ' ';
@@ -34,17 +34,18 @@ export class DetallePedidoComponent {
 
     // To initialize FormGroup
     this.regiForm = fb.group({
-      'Direccion': [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
+      'Direccion': ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
       'FechaEntrega': [null, Validators.required],
-      'FormaPago': [null, Validators.required],
+      'FormaPago': ['', Validators.required],
       'PagoCon': [null, Validators.min(0)],
-      'NumeroTarjeta': [null, CreditCardValidator.validateCardNumber],
-      'NombreTarjeta': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-      'FechaExp': ['', CreditCardValidator.validateCardExpiry],
-      'CodigoSeg': [null, CreditCardValidator.validateCardCvc],
-      'Email': [null, Validators.compose([Validators.required, Validators.email])],
+      'NumeroTarjeta': [null],
+      'NombreTarjeta': [null],
+      'FechaExp': [null],
+      'CodigoSeg': [null],
       'IsAccepted': [null]
     });
+
+    this.cardForm = fb.group({});
 
   }
 
@@ -55,6 +56,18 @@ export class DetallePedidoComponent {
     } else {
       this.IsAccepted = 0;
     }
+  }
+
+  iniciarValidadoresTarjeta(event: any) {
+    if (event === 'usaTarjeta') {
+      this.cardForm = this.fb.group({
+        'NumeroTarjeta': [null, CreditCardValidator.validateCardNumber],
+        'NombreTarjeta': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+        'FechaExp': ['', CreditCardValidator.validateCardExpiry],
+        'CodigoSeg': [null, CreditCardValidator.validateCardCvc],
+      });
+    }
+    this.FormaPago = event;
   }
 
   getTotalCost() {
