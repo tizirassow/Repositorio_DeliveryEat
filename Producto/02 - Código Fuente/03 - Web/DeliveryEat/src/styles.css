@@ -49,6 +49,11 @@ div.container {
 
 }
 
+.material-confirmation-icon{
+  color: #00C853;
+  font-size: 15vw;
+}
+
 agm-map {
   height: 300px;
 }

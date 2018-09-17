@@ -21,8 +21,6 @@ export class DetallePedidoComponent {
   CodigoSeg: '';
   PagoCon: '';
   IsAccepted: number = 0;
-  lat: number = 43.678418;
-  lng: number = -79.809007;
 
   constructor(private fb: FormBuilder) {
 
