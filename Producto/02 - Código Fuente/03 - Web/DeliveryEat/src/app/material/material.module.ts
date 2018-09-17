@@ -21,6 +21,7 @@ import * as Material from '@angular/material';
     Material.MatSlideToggleModule,
     Material.MatDatepickerModule,
     Material.MatNativeDateModule,
+    Material.MatTableModule
 
   ],
   declarations: [],
@@ -39,6 +40,8 @@ import * as Material from '@angular/material';
     Material.MatSlideToggleModule,
     Material.MatDatepickerModule,
     Material.MatNativeDateModule,
+    Material.MatTableModule
+
 
   ]
 })

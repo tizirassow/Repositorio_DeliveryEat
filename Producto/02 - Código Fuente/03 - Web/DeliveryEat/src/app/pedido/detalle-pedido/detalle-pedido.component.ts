@@ -22,6 +22,13 @@ export class DetallePedidoComponent {
   PagoCon: '';
   IsAccepted: number = 0;
 
+  displayedColumns: string[] = ['item', 'cost'];
+  transactions: Transaction[] = [
+    {item: 'Kilo de helado', cost: 250, notas: 'Sabores: Ferrero Rocher, Tramontana'},
+    {item: 'Bombón escocés - 6u', cost: 150, notas: ''},
+    {item: 'Frisbee', cost: 2, notas: ''}
+  ];
+
   constructor(private fb: FormBuilder) {
 
 
@@ -32,7 +39,7 @@ export class DetallePedidoComponent {
       'FormaPago': [null, Validators.required],
       'PagoCon': [null, Validators.min(0)],
       'NumeroTarjeta': [null, CreditCardValidator.validateCardNumber],
-      'NombreTarjeta' : ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+      'NombreTarjeta': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
       'FechaExp': ['', CreditCardValidator.validateCardExpiry],
       'CodigoSeg': [null, CreditCardValidator.validateCardCvc],
       'Email': [null, Validators.compose([Validators.required, Validators.email])],
@@ -50,10 +57,20 @@ export class DetallePedidoComponent {
     }
   }
 
+  getTotalCost() {
+    return this.transactions.map(t => t.cost).reduce((acc, value) => acc + value, 0);
+  }
+
   // Executed When Form Is Submitted
   onFormSubmit(form: NgForm) {
     console.log(form);
   }
 
 
+}
+
+export interface Transaction {
+  item: string;
+  cost: number;
+  notas: string;
 }

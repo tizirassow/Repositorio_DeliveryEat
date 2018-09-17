@@ -32,7 +32,7 @@ div.container {
 }
 
 .example-card {
-  max-width: 30vw;
+  width: 30vw;
 
 }
 
@@ -41,12 +41,16 @@ div.container {
 }
 
 .example-header-image {
-  background-image: url('https://www.caseratto.com.ar/img/nuestraempresa.jpg');
+  background-image: url('src/app/img/caseratto.jpg');
   background-size: cover;
 }
 
-.card-img {
+table {
+  width: 100%;
+}
 
+tr.mat-footer-row {
+  font-weight: bold;
 }
 
 .material-confirmation-icon{
