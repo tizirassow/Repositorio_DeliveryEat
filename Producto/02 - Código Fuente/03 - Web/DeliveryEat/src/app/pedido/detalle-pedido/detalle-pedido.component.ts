@@ -11,15 +11,16 @@ import {CreditCardValidator} from 'ngx-credit-cards';
 export class DetallePedidoComponent {
 
   regiForm: FormGroup;
+  cardForm: FormGroup;
   Direccion: '';
   FechaEentrega: Date = null;
-  Blog: '';
-  Email: '';
+  FormaPago: '';
   NumeroTarjeta: '';
   NombreTarjeta: '';
   FechaExp: ' ';
   CodigoSeg: '';
   PagoCon: '';
+  EsFechaEspecifica: number = 0;
   IsAccepted: number = 0;
 
   displayedColumns: string[] = ['item', 'cost'];
@@ -33,18 +34,20 @@ export class DetallePedidoComponent {
 
     // To initialize FormGroup
     this.regiForm = fb.group({
-      'Direccion': [null, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
+      'Direccion': ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
       'FechaEntrega': [null, Validators.required],
       'HoraEntrega': [null, Validators.required],
       'FormaPago': [null, Validators.required],
-      'PagoCon': [null, Validators.min(0)],
-      'NumeroTarjeta': [null, CreditCardValidator.validateCardNumber],
-      'NombreTarjeta': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-      'FechaExp': ['', CreditCardValidator.validateCardExpiry],
-      'CodigoSeg': [null, CreditCardValidator.validateCardCvc],
-      'Email': [null, Validators.compose([Validators.required, Validators.email])],
+      'PagoCon': [null, Validators.compose([Validators.min(10), Validators.nullValidator])],
+      'NumeroTarjeta': [null],
+      'NombreTarjeta': [null],
+      'FechaExp': [null],
+      'CodigoSeg': [null],
+      'EsFechaEspecifica': [null],
       'IsAccepted': [null]
     });
+
+    this.cardForm = fb.group({});
 
   }
 
@@ -55,6 +58,26 @@ export class DetallePedidoComponent {
     } else {
       this.IsAccepted = 0;
     }
+  }
+
+  FechaHoraEspecifica(event: any) {
+    if (event.checked === true) {
+      this.EsFechaEspecifica = 1;
+    } else {
+      this.EsFechaEspecifica = 0;
+    }
+  }
+
+  iniciarValidadoresTarjeta(event: any) {
+    if (event === 'usaTarjeta') {
+      this.cardForm = this.fb.group({
+        'NumeroTarjeta': [null, CreditCardValidator.validateCardNumber],
+        'NombreTarjeta': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+        'FechaExp': ['', CreditCardValidator.validateCardExpiry],
+        'CodigoSeg': [null, CreditCardValidator.validateCardCvc],
+      });
+    }
+    this.FormaPago = event;
   }
 
   getTotalCost() {
