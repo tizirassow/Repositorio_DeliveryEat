@@ -5,20 +5,18 @@ import {Time} from '@angular/common';
 
 
 @Component({
-  selector: 'app-detalle-pedido',
-  templateUrl: './detalle-pedido.component.html',
-  styleUrls: ['./detalle-pedido.component.css']
+  selector: 'app-detalle-pedido', templateUrl: './detalle-pedido.component.html', styleUrls: ['./detalle-pedido.component.css']
 })
 export class DetallePedidoComponent {
 
   regiForm: FormGroup;
+  fechaHoraForm: FormGroup;
   pagosForm: FormGroup;
   cardForm: FormGroup;
   confirmationForm: FormGroup;
   Direccion: '';
   FechaEntrega: Date = null;
   HoraEntrega: Time = null;
-  HoraE;
   FormaPago: '';
   NumeroTarjeta: '';
   NombreTarjeta: '';
@@ -29,21 +27,16 @@ export class DetallePedidoComponent {
   IsAccepted: number = 0;
 
   displayedColumns: string[] = ['item', 'cost'];
-  transactions: Transaction[] = [
-    {item: 'Kilo de helado', cost: 250, notas: 'Sabores: Ferrero Rocher, Tramontana'},
-    {item: 'Bombón escocés - 6u', cost: 150, notas: ''}
-  ];
+  transactions: Transaction[] = [{
+    item: 'Kilo de helado', cost: 250, notas: 'Sabores: Ferrero Rocher, Tramontana'
+  }, {item: 'Bombón escocés - 6u', cost: 150, notas: ''}];
 
   constructor(private fb: FormBuilder) {
-
 
     // To initialize FormGroup
     this.regiForm = fb.group({
       'Direccion': ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
-      'FechaEntrega': [null, Validators.required],
-      'HoraEntrega': [null, Validators.compose([Validators.required, Validators.nullValidator])],
-      'EsFechaEspecifica': [null],
-      'IsAccepted': [null]
+      'EsFechaEspecifica': [null]
     });
 
     this.pagosForm = fb.group({
@@ -56,9 +49,10 @@ export class DetallePedidoComponent {
     });
     this.cardForm = fb.group({});
     this.confirmationForm = fb.group({
-      stepConfirmacionCtrl: ['', Validators.required]
-
+      stepConfirmacionCtrl: ['', Validators.required], 'IsAccepted': [null]
     });
+    this.fechaHoraForm = fb.group({});
+
 
   }
 
@@ -74,8 +68,15 @@ export class DetallePedidoComponent {
   FechaHoraEspecifica(event: any) {
     if (event.checked === true) {
       this.EsFechaEspecifica = 1;
+      this.fechaHoraForm = this.fb.group({
+        'FechaEntrega': [null, Validators.required],
+        'HoraEntrega': [null, Validators.compose([Validators.required, Validators.nullValidator])],
+      });
     } else {
       this.EsFechaEspecifica = 0;
+      this.fechaHoraForm = this.fb.group({
+        'FechaEntrega': [null], 'HoraEntrega': [null]
+      });
     }
   }
 

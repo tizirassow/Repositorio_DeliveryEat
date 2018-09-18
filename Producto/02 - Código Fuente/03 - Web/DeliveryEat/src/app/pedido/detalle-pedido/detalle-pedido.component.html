@@ -35,6 +35,8 @@
                   </td>
                 </tr>
                 <tr><br></tr>
+                <form [formGroup]="fechaHoraForm" >
+
                 <tr *ngIf="EsFechaEspecifica == 1">
                   <td colspan="2">
                     <mat-form-field class="demo-full-width">
@@ -45,26 +47,32 @@
                       <mat-datepicker touchUi="true" #picker></mat-datepicker>
                     </mat-form-field>
                     <mat-error>
-                      <span *ngIf="!regiForm.get('FechaEntrega').valid && regiForm.get('FechaEntrega').touched">Por favor, seleccioná una fecha</span>
+                      <span *ngIf="!fechaHoraForm.get('FechaEntrega').valid && fechaHoraForm.get('FechaEntrega').touched">Por favor, seleccioná una fecha</span>
                     </mat-error>
+                  </td>
+                </tr>
                 <tr><br></tr>
-                <tr>
-                  <mat-form-field>
+                <tr *ngIf="EsFechaEspecifica == 1">
+                  <td colspan="2">
 
-                  <input matInput formControlName="HoraEntrega" placeholder="Hora" type="time" id="appt-time" name="appt-time"
-                         min="08:00" max="20:00" required/>
-                  </mat-form-field>
-                  <mat-error>
-                    <span *ngIf="!regiForm.get('HoraEntrega').valid && regiForm.get('HoraEntrega').touched">Por favor, seleccioná una hora</span>
-                  </mat-error>
+                    <mat-form-field>
 
+                      <input matInput formControlName="HoraEntrega" placeholder="Hora" type="time" id="appt-time"
+                             name="appt-time"
+                             min="08:00" max="20:00" required/>
+                    </mat-form-field>
+                    <mat-error>
+                      <span *ngIf="!fechaHoraForm.get('HoraEntrega').valid && fechaHoraForm.get('HoraEntrega').touched">Por favor, seleccioná una hora</span>
+                    </mat-error>
+                  </td>
                   <!--Este min y max no funciona, pero ese sería el horario de casseratto-->
                 </tr>
                 <tr><br></tr>
+                </form>
               </table>
             </form>
             <button mat-raised-button matStepperNext
-                    [disabled]="!regiForm.get('Direccion').valid || EsFechaEspecifica==1 && (!regiForm.get('FechaEntrega').valid || !regiForm.get('HoraEntrega').valid)">
+                    [disabled]="!regiForm.get('Direccion').valid || EsFechaEspecifica==1 && (!fechaHoraForm.get('FechaEntrega').valid || !fechaHoraForm.get('HoraEntrega').valid)">
               Siguiente
             </button>
           </mat-step>
@@ -176,8 +184,8 @@
                 </form>
 
               </table>
-            <!--</form>-->
-            <!--<mat-icon class="material-confirmation-icon">check_circle</mat-icon>-->
+              <!--</form>-->
+              <!--<mat-icon class="material-confirmation-icon">check_circle</mat-icon>-->
             </form>
           </mat-step>
 
@@ -186,7 +194,8 @@
               <table>
                 <tr>
                   <td colspan="2">
-                    <mat-slide-toggle formControlName="stepConfirmacionCtrl" (change)="OnChanges($event)" required>Aceptar términos y
+                    <mat-slide-toggle formControlName="stepConfirmacionCtrl" (change)="OnChanges($event)" required>
+                      Aceptar términos y
                       condiciones
                     </mat-slide-toggle>
                   </td>
@@ -197,8 +206,8 @@
                 </tr>
                 <tr><i>Dirección: </i>{{regiForm.get('Direccion').value}}</tr>
                 <tr *ngIf="EsFechaEspecifica == 1">
-                  <i>Fecha: </i>{{regiForm.get('FechaEntrega').value | date:'MM/dd/yyyy'}}
-                  <br><i>Hora: </i>{{regiForm.get('HoraEntrega').value}}<br>
+                  <i>Fecha: </i>{{fechaHoraForm.get('FechaEntrega').value | date:'MM/dd/yyyy'}}
+                  <br><i>Hora: </i>{{fechaHoraForm.get('HoraEntrega').value}}<br>
                 </tr>
                 <tr><br></tr>
                 <tr><b>Pago</b></tr>
