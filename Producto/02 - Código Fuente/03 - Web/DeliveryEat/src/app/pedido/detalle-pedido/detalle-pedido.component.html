@@ -42,7 +42,7 @@
                     <mat-form-field class="demo-full-width">
 
                       <input formControlName="fechaEntrega" matInput [matDatepicker]="picker"
-                             placeholder="Fecha de entrega">
+                             placeholder="Fecha de entrega" [min]="today">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker touchUi="true" #picker></mat-datepicker>
                     </mat-form-field>

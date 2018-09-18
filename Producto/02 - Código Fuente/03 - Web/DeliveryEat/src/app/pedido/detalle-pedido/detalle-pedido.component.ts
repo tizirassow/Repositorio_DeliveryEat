@@ -19,6 +19,7 @@ export class DetallePedidoComponent {
   cardForm: FormGroup;
   confirmationForm: FormGroup;
   direccion: '';
+  today =  new Date();
   fechaEntrega: Date = null;
   horaEntrega: Time = null;
   formaPago: '';
