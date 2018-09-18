@@ -48,26 +48,30 @@
                     </mat-error>
                 <tr><br></tr>
                 <tr>
-                  <mat-form-field>
-                  <mat-select formControlName="HoraEntrega" placeholder="Hora" maxlength="2">
-                    <mat-option></mat-option>
-                    <mat-option value="08">08</mat-option>
-                    <mat-option value="09">09</mat-option>
-                    <mat-option value="10">10</mat-option>
-                    <mat-option value="11">11</mat-option>
-                    <mat-option value="12">12</mat-option>
-                    <mat-option value="13">13</mat-option>
-                    <mat-option value="14">14</mat-option>
-                    <mat-option value="15">15</mat-option>
-                    <mat-option value="16">16</mat-option>
-                    <mat-option value="17">17</mat-option>
-                    <mat-option value="18">18</mat-option>
-                    <mat-option value="19">19</mat-option>
-                    <mat-option value="20">20</mat-option>
-                  </mat-select>
-                  </mat-form-field>
+                  <label for="appt-time">Hora: </label>
+                  <input type="time" id="appt-time" name="appt-time"
+                         min="08:00" max="20:00" value="08:00" required/>
+                  <!--<mat-form-field>-->
+                  <!--<mat-select formControlName="HoraEntrega" placeholder="Hora" maxlength="2">-->
+                  <!--<mat-option></mat-option>-->
+                  <!--<mat-option value="08">08</mat-option>-->
+                  <!--<mat-option value="09">09</mat-option>-->
+                  <!--<mat-option value="10">10</mat-option>-->
+                  <!--<mat-option value="11">11</mat-option>-->
+                  <!--<mat-option value="12">12</mat-option>-->
+                  <!--<mat-option value="13">13</mat-option>-->
+                  <!--<mat-option value="14">14</mat-option>-->
+                  <!--<mat-option value="15">15</mat-option>-->
+                  <!--<mat-option value="16">16</mat-option>-->
+                  <!--<mat-option value="17">17</mat-option>-->
+                  <!--<mat-option value="18">18</mat-option>-->
+                  <!--<mat-option value="19">19</mat-option>-->
+                  <!--<mat-option value="20">20</mat-option>-->
+                  <!--</mat-select>-->
+                  <!--</mat-form-field>-->
 
                 </tr>
+                <tr><br></tr>
 
               </table>
             </form>
@@ -170,11 +174,11 @@
                   </mat-error>
                   <!--</td>-->
                 </tr>
-
+                <tr><br></tr>
               </table>
             </form>
             <!--<mat-icon class="material-confirmation-icon">check_circle</mat-icon>-->
-
+            <button mat-raised-button matStepperNext>Siguiente</button>
           </mat-step>
 
           <mat-step label="Confirmación">
@@ -196,8 +200,7 @@
                     </button>
                   </td>
                 </tr>
-                <tr>
-                </tr>
+
               </table>
             </form>
 
