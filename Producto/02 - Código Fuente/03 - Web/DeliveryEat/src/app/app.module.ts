@@ -18,7 +18,7 @@ import {ComercioComponent} from './comercios/comercio.component';
 import {PagosComponent} from './pagos/pagos.component';
 import {PedidoComponent} from './pedido/pedido.component';
 import {ProductoComponent} from './productos/producto.component';
-import { DetallePedidoComponent } from './pedido/detalle-pedido/detalle-pedido.component';
+import {DetallePedidoComponent, PizzaPartyComponent} from './pedido/detalle-pedido/detalle-pedido.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +27,8 @@ import { DetallePedidoComponent } from './pedido/detalle-pedido/detalle-pedido.c
     PagosComponent,
     PedidoComponent,
     ProductoComponent,
-    DetallePedidoComponent
-
+    DetallePedidoComponent,
+    PizzaPartyComponent,
   ],
   imports: [
     // AppRoutingModule,
@@ -46,7 +46,7 @@ import { DetallePedidoComponent } from './pedido/detalle-pedido/detalle-pedido.c
   ],
   providers: [ComerciosService],
   bootstrap: [AppComponent],
-  entryComponents: [PedidoComponent]
+  entryComponents: [PedidoComponent, PizzaPartyComponent]
 
 })
 export class AppModule {

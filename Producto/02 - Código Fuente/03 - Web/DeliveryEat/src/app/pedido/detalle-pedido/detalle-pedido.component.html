@@ -222,10 +222,14 @@
                 <tr>
                   <td colspan="2" class="content-center">
                     <button mat-raised-button color="accent"
+                            (click)="openSnackBar()"
                             [disabled]="!regiForm.valid || (!cardForm.valid && FormaPago==='usaTarjeta') || IsAccepted==0"
                             matStepperNext>
                       Confirmar Pedido
                     </button>
+
+
+
                   </td>
                 </tr>
                 <tr>

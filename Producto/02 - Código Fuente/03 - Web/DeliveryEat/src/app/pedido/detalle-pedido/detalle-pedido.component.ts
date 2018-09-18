@@ -1,5 +1,6 @@
-import {Component, OnInit, OnChanges} from '@angular/core';
+import {Component, OnInit, OnChanges, Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormsModule, NgForm} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
 import {CreditCardValidator} from 'ngx-credit-cards';
 import {Time} from '@angular/common';
 
@@ -31,7 +32,7 @@ export class DetallePedidoComponent {
     item: 'Kilo de helado', cost: 250, notas: 'Sabores: Ferrero Rocher, Tramontana'
   }, {item: 'Bombón escocés - 6u', cost: 150, notas: ''}];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public snackBar: MatSnackBar) {
 
     // To initialize FormGroup
     this.regiForm = fb.group({
@@ -103,6 +104,11 @@ export class DetallePedidoComponent {
     console.log(form);
   }
 
+  openSnackBar() {
+    this.snackBar.openFromComponent(PizzaPartyComponent, {
+      duration: 10000,
+    });
+  }
 
 }
 
@@ -110,4 +116,10 @@ export interface Transaction {
   item: string;
   cost: number;
   notas: string;
+}
+
+@Component({
+  selector: 'confirmacion-dp', templateUrl: 'confirmacion.html'
+})
+export class PizzaPartyComponent {
 }

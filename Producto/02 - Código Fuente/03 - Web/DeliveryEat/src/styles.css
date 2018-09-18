@@ -58,6 +58,14 @@ tr.mat-footer-row {
   font-size: 15vw;
 }
 
+.div-confirmacion{
+  height: 50vh;
+  display: flex;
+  /*justify-content: center;*/
+  align-items: center;
+}
+
+
 .mat-stepper-vertical {
   padding-bottom: 15vw;
   display: block;

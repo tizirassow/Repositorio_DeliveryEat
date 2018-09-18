@@ -21,7 +21,8 @@ import * as Material from '@angular/material';
     Material.MatSlideToggleModule,
     Material.MatDatepickerModule,
     Material.MatNativeDateModule,
-    Material.MatTableModule
+    Material.MatTableModule,
+    Material.MatSnackBarModule
 
   ],
   declarations: [],
@@ -40,7 +41,9 @@ import * as Material from '@angular/material';
     Material.MatSlideToggleModule,
     Material.MatDatepickerModule,
     Material.MatNativeDateModule,
-    Material.MatTableModule
+    Material.MatTableModule,
+    Material.MatSnackBarModule
+
 
 
   ]
