@@ -50,7 +50,7 @@
                 <tr><br></tr>
                 <tr>
                   <label for="appt-time">Hora: </label>
-                  <input type="time" id="appt-time" name="appt-time"
+                  <input formControlName="HoraEntrega" type="time" id="appt-time" name="appt-time"
                          min="08:00" max="20:00" required/>
                   <!--Este min y max no funciona, pero ese sería el horario de casseratto-->
                 </tr>
@@ -84,7 +84,7 @@
                     </mat-form-field>
                   </td>
                 </tr>
-
+                <tr><br></tr>
                 <tr *ngIf="regiForm.get('FormaPago').value=='usaEfectivo'">
                   <mat-form-field class="demo-full-width">
                     <input formControlName="PagoCon" matInput placeholder="¿Con cuánto vas a pagar?" type="number"
@@ -165,7 +165,7 @@
                     <button mat-raised-button color="accent"
                             [disabled]="!((cardForm.valid && FormaPago==='usaTarjeta') || (regiForm.get('PagoCon').valid && FormaPago==='usaEfectivo'))"
                             matStepperNext>
-                      Confirmar Pedido
+                      Siguiente
                     </button>
                   </td>
 
@@ -188,6 +188,24 @@
                   </td>
                 </tr>
                 <tr><br></tr>
+                <tr>
+                  <b>Envío</b>
+                </tr>
+                <tr><i>Dirección: </i>{{regiForm.get('Direccion').value}}</tr>
+                <tr *ngIf="EsFechaEspecifica == 1">
+                  <i>Fecha: </i>{{regiForm.get('FechaEntrega').value | date:'MM/dd/yyyy'}}
+                  <br><i>Hora: </i>{{regiForm.get('HoraEntrega').value}}<br>
+                </tr>
+                <tr><br></tr>
+                <tr><b>Pago</b></tr>
+                <tr><i>Forma de pago: </i>
+                  <span *ngIf="regiForm.get('FormaPago').value == 'usaEfectivo'">Efectivo<br>
+                  <i>Abona con: </i>${{regiForm.get('PagoCon').value}}
+                  </span>
+                  <span *ngIf="regiForm.get('FormaPago').value == 'usaTarjeta'">Tarjeta de crédito</span>
+                </tr>
+                <tr><br></tr>
+
                 <tr>
                   <td colspan="2" class="content-center">
                     <button mat-raised-button color="accent"
