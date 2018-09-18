@@ -32,24 +32,45 @@ div.container {
 }
 
 .example-card {
-  max-width: 30vw;
+  width: 30vw;
 
 }
 
-.mat-icon{
+.mat-icon {
   font-size: 1.2em;
 }
 
 .example-header-image {
-  background-image: url('https://www.caseratto.com.ar/img/nuestraempresa.jpg');
+  background-image: url("src/app/img/caseratto.jpg");
   background-size: cover;
 }
 
-.card-img {
+table {
+  width: 100%;
+}
 
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.material-confirmation-icon {
+  color: #00C853;
+  font-size: 15vw;
+}
+
+.div-confirmacion{
+  height: 50vh;
+  display: flex;
+  /*justify-content: center;*/
+  align-items: center;
+}
+
+
+.mat-stepper-vertical {
+  padding-bottom: 15vw;
+  display: block;
 }
 
 agm-map {
   height: 300px;
 }
-

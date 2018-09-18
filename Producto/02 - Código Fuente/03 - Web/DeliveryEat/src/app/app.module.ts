@@ -1,24 +1,20 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-// import {AppRoutingModule} from './app-routing.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {LayoutModule} from '@angular/cdk/layout';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material/material.module';
 import { AgmCoreModule } from '@agm/core';
 import { NgXCreditCardsModule } from 'ngx-credit-cards';
 
-
-
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LayoutModule} from '@angular/cdk/layout';
-
 import {ComerciosService} from './shared/comercios.service';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {ComercioComponent} from './comercios/comercio.component';
 import {PagosComponent} from './pagos/pagos.component';
 import {PedidoComponent} from './pedido/pedido.component';
 import {ProductoComponent} from './productos/producto.component';
-import { DetallePedidoComponent } from './pedido/detalle-pedido/detalle-pedido.component';
+import {DetallePedidoComponent, ConfirmacionComponent} from './pedido/detalle-pedido/detalle-pedido.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +23,8 @@ import { DetallePedidoComponent } from './pedido/detalle-pedido/detalle-pedido.c
     PagosComponent,
     PedidoComponent,
     ProductoComponent,
-    DetallePedidoComponent
-
+    DetallePedidoComponent,
+    ConfirmacionComponent,
   ],
   imports: [
     // AppRoutingModule,
@@ -46,7 +42,7 @@ import { DetallePedidoComponent } from './pedido/detalle-pedido/detalle-pedido.c
   ],
   providers: [ComerciosService],
   bootstrap: [AppComponent],
-  entryComponents: [PedidoComponent]
+  entryComponents: [PedidoComponent, ConfirmacionComponent]
 
 })
 export class AppModule {
