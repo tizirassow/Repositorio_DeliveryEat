@@ -49,16 +49,22 @@
                     </mat-error>
                 <tr><br></tr>
                 <tr>
-                  <label for="appt-time">Hora: </label>
-                  <input formControlName="HoraEntrega" type="time" id="appt-time" name="appt-time"
+                  <mat-form-field>
+
+                  <input matInput formControlName="HoraEntrega" placeholder="Hora" type="time" id="appt-time" name="appt-time"
                          min="08:00" max="20:00" required/>
+                  </mat-form-field>
+                  <mat-error>
+                    <span *ngIf="!regiForm.get('HoraEntrega').valid && regiForm.get('HoraEntrega').touched">Por favor, seleccioná una hora</span>
+                  </mat-error>
+
                   <!--Este min y max no funciona, pero ese sería el horario de casseratto-->
                 </tr>
                 <tr><br></tr>
               </table>
             </form>
             <button mat-raised-button matStepperNext
-                    [disabled]="(!regiForm.get('Direccion').valid) || (EsFechaEspecifica==1 && !regiForm.get('FechaEntrega').valid && !regiForm.get('HoraEntrega').valid)">
+                    [disabled]="!regiForm.get('Direccion').valid || EsFechaEspecifica==1 && (!regiForm.get('FechaEntrega').valid || !regiForm.get('HoraEntrega').valid)">
               Siguiente
             </button>
           </mat-step>

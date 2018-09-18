@@ -1,6 +1,7 @@
 import {Component, OnInit, OnChanges} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormsModule, NgForm} from '@angular/forms';
 import {CreditCardValidator} from 'ngx-credit-cards';
+import {Time} from '@angular/common';
 
 
 @Component({
@@ -13,7 +14,9 @@ export class DetallePedidoComponent {
   regiForm: FormGroup;
   cardForm: FormGroup;
   Direccion: '';
-  FechaEentrega: Date = null;
+  FechaEntrega: Date = null;
+  HoraEntrega: Time = null;
+  HoraE
   FormaPago: '';
   NumeroTarjeta: '';
   NombreTarjeta: '';
@@ -36,9 +39,9 @@ export class DetallePedidoComponent {
     this.regiForm = fb.group({
       'Direccion': ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
       'FechaEntrega': [null, Validators.required],
-      'HoraEntrega': [null, Validators.required],
+      'HoraEntrega': [null, Validators.compose([Validators.required, Validators.nullValidator])],
       'FormaPago': [null, Validators.required],
-      'PagoCon': [null, Validators.compose([Validators.min(10), Validators.nullValidator])],
+      'PagoCon': [null, Validators.compose([Validators.min(400), Validators.nullValidator])],
       'NumeroTarjeta': [null],
       'NombreTarjeta': [null],
       'FechaExp': [null],
