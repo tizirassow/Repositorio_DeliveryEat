@@ -6,9 +6,9 @@
   <mat-card-content>
     <mat-grid-list cols="6">
       <mat-grid-tile [colspan]="2" [rowspan]="3">
-        <mat-vertical-stepper>
+        <mat-vertical-stepper [linear]=true #stepper>
 
-          <mat-step label="Envío">
+          <mat-step label="Envío" [stepControl]="regiForm">
 
             <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value)">
               <table>
@@ -70,8 +70,8 @@
           </mat-step>
 
 
-          <mat-step label="Pago">
-            <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value)">
+          <mat-step label="Pago" [stepControl]="pagosForm">
+            <form [formGroup]="pagosForm" (ngSubmit)="onFormSubmit(pagosForm.value)">
               <table>
                 <tr>
                   <td>
@@ -85,13 +85,13 @@
                       <mat-hint>Tarjetas únicamente VISA</mat-hint>
                       <mat-error>
                 <span
-                  *ngIf="!regiForm.get('FormaPago').valid && regiForm.get('FormaPago').touched">Por favor, seleccioná una forma de pago.</span>
+                  *ngIf="!pagosForm.get('FormaPago').valid && pagosForm.get('FormaPago').touched">Por favor, seleccioná una forma de pago.</span>
                       </mat-error>
                     </mat-form-field>
                   </td>
                 </tr>
                 <tr><br></tr>
-                <tr *ngIf="regiForm.get('FormaPago').value=='usaEfectivo'">
+                <tr *ngIf="pagosForm.get('FormaPago').value=='usaEfectivo'">
                   <mat-form-field class="demo-full-width">
                     <input formControlName="PagoCon" matInput placeholder="¿Con cuánto vas a pagar?" type="number"
                            required>
@@ -99,14 +99,13 @@
                   <mat-icon color="primary">attach_money</mat-icon>
 
                   <mat-error>
-                    <span *ngIf="!regiForm.get('PagoCon').valid && regiForm.get('PagoCon').touched">Por favor, ingresá la cantidad con la que vas a abonar</span>
+                    <span *ngIf="!pagosForm.get('PagoCon').valid && pagosForm.get('PagoCon').touched">Por favor, ingresá la cantidad con la que vas a abonar</span>
                   </mat-error>
                   <!--</td>-->
                 </tr>
                 <form [formGroup]="cardForm">
-                  <tr *ngIf="regiForm.get('FormaPago').value=='usaTarjeta'">
+                  <tr *ngIf="pagosForm.get('FormaPago').value=='usaTarjeta'">
 
-                    <!--<td colspan="2">-->
                     <mat-form-field class="demo-full-width">
 
                       <input matInput formControlName="NumeroTarjeta" placeholder="Número de tarjeta"
@@ -121,7 +120,7 @@
                     </mat-error>
                     <!--</td>-->
                   </tr>
-                  <tr *ngIf="regiForm.get('FormaPago').value=='usaTarjeta'">
+                  <tr *ngIf="pagosForm.get('FormaPago').value=='usaTarjeta'">
                     <!--<td colspan="2">-->
                     <mat-form-field class="demo-full-width">
 
@@ -134,10 +133,9 @@
                     <mat-error>
                       <span *ngIf="!cardForm.get('NombreTarjeta').valid && cardForm.get('NombreTarjeta').touched">Por favor, ingresá el nombre como figura en la tarjeta</span>
                     </mat-error>
-                    <!--</td>-->
                   </tr>
-                  <tr *ngIf="regiForm.get('FormaPago').value=='usaTarjeta'">
-                    <!--<td colspan="2">-->
+                  <tr *ngIf="pagosForm.get('FormaPago').value=='usaTarjeta'">
+
                     <mat-form-field class="demo-full-width">
 
                       <input matInput type="tel" formControlName="FechaExp" placeholder="MM/YY" autocomplete="cc-exp"
@@ -152,7 +150,7 @@
                     </mat-error>
                     <!--</td>-->
                   </tr>
-                  <tr *ngIf="regiForm.get('FormaPago').value=='usaTarjeta'">
+                  <tr *ngIf="pagosForm.get('FormaPago').value=='usaTarjeta'">
                     <!--<td colspan="2">-->
                     <mat-form-field class="demo-full-width">
 
@@ -169,7 +167,7 @@
                   </tr>
                   <td colspan="2" class="content-center">
                     <button mat-raised-button color="accent"
-                            [disabled]="!((cardForm.valid && FormaPago==='usaTarjeta') || (regiForm.get('PagoCon').valid && FormaPago==='usaEfectivo'))"
+                            [disabled]="!((cardForm.valid && FormaPago==='usaTarjeta') || (pagosForm.get('PagoCon').valid && FormaPago==='usaEfectivo'))"
                             matStepperNext>
                       Siguiente
                     </button>
@@ -178,17 +176,17 @@
                 </form>
 
               </table>
-            </form>
+            <!--</form>-->
             <!--<mat-icon class="material-confirmation-icon">check_circle</mat-icon>-->
-
+            </form>
           </mat-step>
 
           <mat-step label="Confirmación">
-            <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value)">
+            <form [formGroup]="confirmationForm" (ngSubmit)="onFormSubmit(regiForm.value)">
               <table>
                 <tr>
                   <td colspan="2">
-                    <mat-slide-toggle formControlName="IsAccepted" (change)="OnChanges($event)">Aceptar términos y
+                    <mat-slide-toggle formControlName="stepConfirmacionCtrl" (change)="OnChanges($event)" required>Aceptar términos y
                       condiciones
                     </mat-slide-toggle>
                   </td>
@@ -205,10 +203,10 @@
                 <tr><br></tr>
                 <tr><b>Pago</b></tr>
                 <tr><i>Forma de pago: </i>
-                  <span *ngIf="regiForm.get('FormaPago').value == 'usaEfectivo'">Efectivo<br>
-                  <i>Abona con: </i>${{regiForm.get('PagoCon').value}}
+                  <span *ngIf="pagosForm.get('FormaPago').value == 'usaEfectivo'">Efectivo<br>
+                  <i>Abona con: </i>${{pagosForm.get('PagoCon').value}}
                   </span>
-                  <span *ngIf="regiForm.get('FormaPago').value == 'usaTarjeta'">Tarjeta de crédito</span>
+                  <span *ngIf="pagosForm.get('FormaPago').value == 'usaTarjeta'">Tarjeta de crédito</span>
                 </tr>
                 <tr><br></tr>
 

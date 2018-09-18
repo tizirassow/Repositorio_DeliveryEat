@@ -12,11 +12,13 @@ import {Time} from '@angular/common';
 export class DetallePedidoComponent {
 
   regiForm: FormGroup;
+  pagosForm: FormGroup;
   cardForm: FormGroup;
+  confirmationForm: FormGroup;
   Direccion: '';
   FechaEntrega: Date = null;
   HoraEntrega: Time = null;
-  HoraE
+  HoraE;
   FormaPago: '';
   NumeroTarjeta: '';
   NombreTarjeta: '';
@@ -40,17 +42,23 @@ export class DetallePedidoComponent {
       'Direccion': ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
       'FechaEntrega': [null, Validators.required],
       'HoraEntrega': [null, Validators.compose([Validators.required, Validators.nullValidator])],
+      'EsFechaEspecifica': [null],
+      'IsAccepted': [null]
+    });
+
+    this.pagosForm = fb.group({
       'FormaPago': [null, Validators.required],
       'PagoCon': [null, Validators.compose([Validators.min(400), Validators.nullValidator])],
       'NumeroTarjeta': [null],
       'NombreTarjeta': [null],
       'FechaExp': [null],
       'CodigoSeg': [null],
-      'EsFechaEspecifica': [null],
-      'IsAccepted': [null]
     });
-
     this.cardForm = fb.group({});
+    this.confirmationForm = fb.group({
+      stepConfirmacionCtrl: ['', Validators.required]
+
+    });
 
   }
 
@@ -80,7 +88,9 @@ export class DetallePedidoComponent {
         'CodigoSeg': [null, CreditCardValidator.validateCardCvc],
       });
     }
-    this.FormaPago = event;
+    if (event) {
+      this.FormaPago = event;
+    }
   }
 
   getTotalCost() {
