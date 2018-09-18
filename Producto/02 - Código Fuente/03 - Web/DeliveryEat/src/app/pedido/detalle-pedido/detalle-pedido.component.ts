@@ -20,13 +20,13 @@ export class DetallePedidoComponent {
   FechaExp: ' ';
   CodigoSeg: '';
   PagoCon: '';
+  EsFechaEspecifica: number = 0;
   IsAccepted: number = 0;
 
   displayedColumns: string[] = ['item', 'cost'];
   transactions: Transaction[] = [
     {item: 'Kilo de helado', cost: 250, notas: 'Sabores: Ferrero Rocher, Tramontana'},
-    {item: 'Bombón escocés - 6u', cost: 150, notas: ''},
-    {item: 'Frisbee', cost: 2, notas: ''}
+    {item: 'Bombón escocés - 6u', cost: 150, notas: ''}
   ];
 
   constructor(private fb: FormBuilder) {
@@ -36,12 +36,14 @@ export class DetallePedidoComponent {
     this.regiForm = fb.group({
       'Direccion': ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
       'FechaEntrega': [null, Validators.required],
-      'FormaPago': ['', Validators.required],
-      'PagoCon': [null, Validators.min(0)],
+      'HoraEntrega': [null, Validators.required],
+      'FormaPago': [null, Validators.required],
+      'PagoCon': [null, Validators.compose([Validators.min(10), Validators.nullValidator])],
       'NumeroTarjeta': [null],
       'NombreTarjeta': [null],
       'FechaExp': [null],
       'CodigoSeg': [null],
+      'EsFechaEspecifica': [null],
       'IsAccepted': [null]
     });
 
@@ -55,6 +57,14 @@ export class DetallePedidoComponent {
       this.IsAccepted = 1;
     } else {
       this.IsAccepted = 0;
+    }
+  }
+
+  FechaHoraEspecifica(event: any) {
+    if (event.checked === true) {
+      this.EsFechaEspecifica = 1;
+    } else {
+      this.EsFechaEspecifica = 0;
     }
   }
 

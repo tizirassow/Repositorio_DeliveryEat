@@ -58,7 +58,11 @@ tr.mat-footer-row {
   font-size: 15vw;
 }
 
+.mat-stepper-vertical {
+  padding-bottom: 15vw;
+  display: block;
+}
+
 agm-map {
   height: 300px;
 }
-
