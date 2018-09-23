@@ -28,7 +28,7 @@
                   </td>
                 <tr>
                   <td>
-                    <mat-slide-toggle formControlName="esFechaEspecifica" (change)="fechaHoraEspecifica($event)">Fecha y
+                    <mat-slide-toggle formControlName="esFechaEspecifica" (change)="fechaHoraEspecifica($event)" placeholder="Por defecto es lo antes posible" >Fecha y
                       hora
                       específica
                     </mat-slide-toggle>
@@ -65,7 +65,6 @@
                       <span *ngIf="!fechaHoraForm.get('horaEntrega').valid && fechaHoraForm.get('horaEntrega').touched">Por favor, seleccioná una hora</span>
                     </mat-error>
                   </td>
-                  <!--Este min y max no funciona, pero ese sería el horario de casseratto-->
                 </tr>
                 <tr><br></tr>
                 </form>
@@ -132,14 +131,14 @@
                     <!--<td colspan="2">-->
                     <mat-form-field class="demo-full-width">
 
-                      <input matInput formControlName="NombreTarjeta" placeholder="Nombre del titular"
+                      <input matInput formControlName="nombreTarjeta" placeholder="Nombre del titular"
                              autocomplete="cc-number">
 
                     </mat-form-field>
                     <mat-icon color="primary">perm_identity</mat-icon>
 
                     <mat-error>
-                      <span *ngIf="!cardForm.get('NombreTarjeta').valid && cardForm.get('NombreTarjeta').touched">Por favor, ingresá el nombre como figura en la tarjeta</span>
+                      <span *ngIf="!cardForm.get('nombreTarjeta').valid && cardForm.get('nombreTarjeta').touched">Por favor, ingresá el nombre como figura en la tarjeta</span>
                     </mat-error>
                   </tr>
                   <tr *ngIf="pagosForm.get('formaPago').value=='usaTarjeta'">
@@ -214,8 +213,11 @@
                 <tr><i>Forma de pago: </i>
                   <span *ngIf="pagosForm.get('formaPago').value == 'usaEfectivo'">Efectivo<br>
                   <i>Abona con: </i>${{pagosForm.get('pagoCon').value}}
+                  <br>
+                    <i>Tu vuelto: </i>${{pagosForm.get('pagoCon').value - getTotalCost()}}
                   </span>
                   <span *ngIf="pagosForm.get('formaPago').value == 'usaTarjeta'">Tarjeta de crédito</span>
+
                 </tr>
                 <tr><br></tr>
 
