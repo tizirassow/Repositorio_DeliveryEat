@@ -9,20 +9,13 @@ import {MaterialModule} from './material/material.module';
 import { AgmCoreModule } from '@agm/core';
 import { NgXCreditCardsModule } from 'ngx-credit-cards';
 
-import {ComerciosService} from './shared/comercios.service';
-import {ComercioComponent} from './comercios/comercio.component';
-import {PagosComponent} from './pagos/pagos.component';
 import {PedidoComponent} from './pedido/pedido.component';
-import {ProductoComponent} from './productos/producto.component';
 import {DetallePedidoComponent, ConfirmacionComponent} from './pedido/detalle-pedido/detalle-pedido.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ComercioComponent,
-    PagosComponent,
     PedidoComponent,
-    ProductoComponent,
     DetallePedidoComponent,
     ConfirmacionComponent,
   ],
@@ -40,7 +33,6 @@ import {DetallePedidoComponent, ConfirmacionComponent} from './pedido/detalle-pe
       libraries: ['places']
     })
   ],
-  providers: [ComerciosService],
   bootstrap: [AppComponent],
   entryComponents: [PedidoComponent, ConfirmacionComponent]
 

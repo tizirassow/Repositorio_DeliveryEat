@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Comercio} from '../comercios/comercio.component';
-import {Producto} from '../productos/producto.component';
+
 
 /**
  * @title Stepper overview
@@ -12,8 +11,6 @@ import {Producto} from '../productos/producto.component';
   styleUrls: ['pedido.component.css'],
 })
 export class PedidoComponent implements OnInit {
-  comercioSeleccionado: Comercio;
-  productoeleccionado: Producto;
 
   isLinear = true;
   options: FormGroup;
@@ -29,11 +26,4 @@ export class PedidoComponent implements OnInit {
 
   }
 
-  seleccionComercio(comercio) {
-    this.comercioSeleccionado = comercio;
-  }
-
-  seleccionProducto(producto) {
-    this.productoeleccionado = producto;
-  }
 }
