@@ -28,8 +28,7 @@ export class DetallePedidoComponent {
   fechaExp: ' ';
   codigoSeg: '';
   pagoCon: '';
-  esFechaEspecifica: number = 0;
-  isAccepted: number = 0;
+  esYa: number = 0;
 
   displayedColumns: string[] = ['item', 'cost'];
   pedidoHard: Pedido[] = [{
@@ -38,74 +37,96 @@ export class DetallePedidoComponent {
 
   constructor(private fb: FormBuilder, public snackBar: MatSnackBar) {
 
-    // To initialize FormGroup
+    // Incializo los formularios con sus respectivas validaciones iniciales
     this.regiForm = fb.group({
-      'direccion': ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(500)])],
-      'esFechaEspecifica': [null]
+      'calle': ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      'numeracion': ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(10),Validators.pattern('^[0-9_-]*')])],
+      'piso': ['', Validators.compose([Validators.minLength(1), Validators.maxLength(4),Validators.pattern('^[0-9_-]*')])],
+      'dpto': ['', Validators.compose([Validators.minLength(1), Validators.maxLength(2),Validators.pattern('^[a-zA-Z_-]*')])],
+      'esYa': [null]
     });
-
     this.pagosForm = fb.group({
       'formaPago': [null, Validators.required],
-      'pagoCon': [null, Validators.compose([Validators.min(400), Validators.nullValidator])],
-      'numeroTarjeta': [null],
-      'nombreTarjeta': [null],
-      'fechaExp': [null],
-      'codigoSeg': [null],
+      'pagoCon': [null],
+      'cardForm': fb.group({
+        'numeroTarjeta': [null],
+        'nombreTarjeta': [null],
+        'fechaExp': [null],
+        'codigoSeg': [null]})
     });
-    this.cardForm = fb.group({});
-    this.confirmationForm = fb.group({
-      stepConfirmacionCtrl: ['', Validators.required], 'isAccepted': [null]
+    this.confirmationForm = fb.group({});
+    this.fechaHoraForm = fb.group({
+      'fechaEntrega': [null, Validators.compose([Validators.required, Validators.nullValidator])],
+      'horaEntrega': [null, Validators.compose([Validators.required, Validators.nullValidator])]
     });
-    this.fechaHoraForm = fb.group({});
-
-
-  }
-
-  // On Change event of Toggle Button
-  onChanges(event: any) {
-    if (event.checked === true) {
-      this.isAccepted = 1;
-    } else {
-      this.isAccepted = 0;
-    }
   }
 
   fechaHoraEspecifica(event: any) {
+
     if (event.checked === true) {
-      this.esFechaEspecifica = 1;
-      this.fechaHoraForm = this.fb.group({
-        'fechaEntrega': [null, Validators.required],
-        'horaEntrega': [null, Validators.compose([Validators.required, Validators.nullValidator])],
-      });
+
+      //Si seleccionó "Lo antes posible", quito las validaciones de hora y fecha específica
+      this.esYa = 1;
+      this.fechaHoraForm.controls['fechaEntrega'].clearValidators();
+      this.fechaHoraForm.controls['horaEntrega'].clearValidators();
+      this.fechaHoraForm.controls['fechaEntrega'].updateValueAndValidity();
+      this.fechaHoraForm.controls['horaEntrega'].updateValueAndValidity();
+      this.fechaHoraForm.updateValueAndValidity();
+
     } else {
-      this.esFechaEspecifica = 0;
-      this.fechaHoraForm = this.fb.group({
-        'fechaEntrega': [null], 'horaEntrega': [null]
-      });
+
+      //Si seleccionó "Fecha y hora específica", agrego las validaciones corespondientes
+      this.esYa = 0;
+      this.fechaHoraForm.controls['fechaEntrega'].setValidators(Validators.compose([Validators.required, Validators.nullValidator]));
+      this.fechaHoraForm.controls['horaEntrega'].setValidators(Validators.compose([Validators.required, Validators.nullValidator]));
+      this.fechaHoraForm.controls['fechaEntrega'].updateValueAndValidity();
+      this.fechaHoraForm.controls['horaEntrega'].updateValueAndValidity();
+      this.fechaHoraForm.updateValueAndValidity();
+
     }
   }
-
   iniciarValidadoresTarjeta(event: any) {
-    if (event === 'usaTarjeta') {
-      this.cardForm = this.fb.group({
-        'numeroTarjeta': [null, CreditCardValidator.validateCardNumber],
-        'nombreTarjeta': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-        'fechaExp': ['', CreditCardValidator.validateCardExpiry],
-        'codigoSeg': [null, CreditCardValidator.validateCardCvc],
-      });
-    }
     if (event) {
       this.formaPago = event;
+    }
+    if (event === 'usaTarjeta') {
+      //Si seleccionó forma de pago "Tarjeta de crédito", agrego las validaciones de tarjeta de crédito
+      this.pagosForm.controls['pagoCon'].clearValidators();
+      this.pagosForm.controls['pagoCon'].updateValueAndValidity();
+
+      (this.pagosForm.controls['cardForm'] as FormGroup).controls['numeroTarjeta'].setValidators(Validators.compose([CreditCardValidator.validateCardNumber, Validators.pattern('^4[0-9_-]*')]));
+      (this.pagosForm.controls['cardForm'] as FormGroup).controls['nombreTarjeta'].setValidators(Validators.compose([Validators.required, Validators.minLength(2)]));
+      (this.pagosForm.controls['cardForm'] as FormGroup).controls['fechaExp'].setValidators(CreditCardValidator.validateCardExpiry);
+      (this.pagosForm.controls['cardForm'] as FormGroup).controls['codigoSeg'].setValidators(CreditCardValidator.validateCardCvc);
+      this.pagosForm.controls['cardForm'].updateValueAndValidity();
+
+    }
+    else {
+      //Si seleccionó forma de pago "Efectivo", agrego las validaciones correspondientes
+      this.pagosForm.controls['pagoCon'].setValidators(Validators.compose([Validators.min(400),Validators.required]));
+      this.pagosForm.controls['pagoCon'].updateValueAndValidity();
+      this.pagosForm.controls['cardForm'].clearValidators();
+      this.pagosForm.controls.cardForm = this.fb.group({
+          'numeroTarjeta': [null],
+          'nombreTarjeta': [null],
+          'fechaExp': [null],
+          'codigoSeg': [null],
+      });
+      this.pagosForm.controls['cardForm'].updateValueAndValidity();
+      this.pagosForm.updateValueAndValidity();
+
     }
   }
 
   getTotalCost() {
+    //Devuelvo el monto total del pedido
     return this.pedidoHard.map(t => t.cost).reduce((acc, value) => acc + value, 0);
   }
 
-  // Executed When Form Is Submitted
-  onFormSubmit(form: NgForm) {
-    console.log(form);
+  onFormSubmit(form1: NgForm,form2: NgForm,form3: NgForm) {
+    //muestro por consola el contenido con el que quedó cada formulario
+    var detallePedido = {form1,form2,form3};
+    console.log(detallePedido);
   }
 
   openSnackBar() {

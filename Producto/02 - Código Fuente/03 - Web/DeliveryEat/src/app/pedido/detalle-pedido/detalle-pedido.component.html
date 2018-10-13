@@ -5,85 +5,97 @@
 
   <mat-card-content>
     <mat-grid-list cols="6">
-      <mat-grid-tile [colspan]="2" [rowspan]="3">
+      <mat-grid-tile [colspan]="3" [rowspan]="3">
         <mat-vertical-stepper [linear]=true #stepper>
-
           <mat-step label="Envío" [stepControl]="regiForm">
-
-            <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value)">
+            <form [formGroup]="regiForm" (ngSubmit)="onFormSubmit(regiForm.value,fechaHoraForm.value,pagosForm.value)">
               <table>
                 <tr>
-                  <td>
-                    <mat-form-field class="demo-full-width">
-              <textarea formControlName="direccion" matInput placeholder="Dirección de envío" matTextareaAutosize
-                        matAutosizeMinRows="2" matAutosizeMaxRows="5">
-              </textarea>
-                    </mat-form-field>
-                    <mat-icon color="primary">place</mat-icon>
-
-                    <mat-error>
-                        <span color="warm"
-                              *ngIf="!regiForm.get('direccion').valid && regiForm.get('direccion').touched">Por favor, ingresá la dirección</span>
-                    </mat-error>
-                  </td>
+                    <td>
+                      <mat-form-field class="demo-full-width" style="width:150px !important">
+                                             <textarea formControlName="calle" matInput placeholder="Calle" matTextareaAutosize
+                                                       matAutosizeMaxRows="5">
+                                             </textarea>
+                      </mat-form-field>
+                      <mat-icon color="primary">place</mat-icon>
+                      <mat-error>
+                        <span color="warm" *ngIf="!regiForm.get('calle').valid && regiForm.get('calle').touched">Por favor, ingresá el nombre de la calle</span>
+                      </mat-error>
+                    </td>
+                    <td>
+                      <mat-form-field class="demo-full-width" style="width:90px !important">
+                        <textarea formControlName="numeracion" matInput placeholder="Numeración" matTextareaAutosize>
+                        </textarea>
+                      </mat-form-field>
+                      <mat-error>
+                            <span color="warm"
+                                  *ngIf="!regiForm.get('numeracion').valid && regiForm.get('numeracion').touched">Por favor, ingresá la numeración</span>
+                      </mat-error>
+                    </td>
+                    <td>
+                      <mat-form-field class="demo-full-width" style="width:90px !important">
+                           <textarea formControlName="piso" matInput placeholder="Piso" matTextareaAutosize
+                                     matAutosizeMaxRows="5">
+                          </textarea>
+                      </mat-form-field>
+                      <mat-error>
+                            <span color="warm" *ngIf="!regiForm.get('piso').valid && regiForm.get('piso').touched">Por favor, ingresá un piso válido</span>
+                      </mat-error>
+                    </td>
+                    <td>
+                      <mat-form-field class="demo-full-width" style="width:90px !important">
+                           <textarea formControlName="dpto" matInput placeholder="Departamento" matTextareaAutosize
+                                     matAutosizeMaxRows="5">
+                          </textarea>
+                      </mat-form-field>
+                      <mat-error>
+                            <span color="warm"  *ngIf="!regiForm.get('dpto').valid && regiForm.get('dpto').touched">Por favor, ingresá un departamento válido</span>
+                      </mat-error>
+                    </td>
                 <tr>
                   <td>
-                    <mat-slide-toggle formControlName="esFechaEspecifica" (change)="fechaHoraEspecifica($event)" placeholder="Por defecto es lo antes posible" >Fecha y
-                      hora
-                      específica
+                    <mat-slide-toggle formControlName="esYa" (change)="fechaHoraEspecifica($event)" >
+                      Lo antes posible
                     </mat-slide-toggle>
                   </td>
                 </tr>
                 <tr><br></tr>
                 <form [formGroup]="fechaHoraForm" >
+                  <tr *ngIf="esYa == 0">
+                        <mat-form-field class="demo-full-width">
+                          <input formControlName="fechaEntrega" matInput [matDatepicker]="picker"
+                                 placeholder="Fecha de entrega" [min]="today">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker touchUi="true" #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-error>
+                          <span *ngIf="!fechaHoraForm.get('fechaEntrega').valid && fechaHoraForm.get('fechaEntrega').touched">Por favor, seleccioná una fecha</span>
+                        </mat-error>
+                        <mat-form-field>
+                          <input matInput formControlName="horaEntrega" placeholder="Hora" type="time" id="appt-time"
+                                 name="appt-time"
+                                 min="08:00" max="20:00" required/>
+                        </mat-form-field>
+                        <mat-error>
+                          <span *ngIf="!fechaHoraForm.get('horaEntrega').valid && fechaHoraForm.get('horaEntrega').touched">Por favor, seleccioná una hora</span>
+                        </mat-error>
 
-                <tr *ngIf="esFechaEspecifica == 1">
-                  <td colspan="2">
-                    <mat-form-field class="demo-full-width">
-
-                      <input formControlName="fechaEntrega" matInput [matDatepicker]="picker"
-                             placeholder="Fecha de entrega" [min]="today">
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker touchUi="true" #picker></mat-datepicker>
-                    </mat-form-field>
-                    <mat-error>
-                      <span *ngIf="!fechaHoraForm.get('fechaEntrega').valid && fechaHoraForm.get('fechaEntrega').touched">Por favor, seleccioná una fecha</span>
-                    </mat-error>
-                  </td>
-                </tr>
-                <tr><br></tr>
-                <tr *ngIf="esFechaEspecifica == 1">
-                  <td colspan="2">
-
-                    <mat-form-field>
-
-                      <input matInput formControlName="horaEntrega" placeholder="Hora" type="time" id="appt-time"
-                             name="appt-time"
-                             min="08:00" max="20:00" required/>
-                    </mat-form-field>
-                    <mat-error>
-                      <span *ngIf="!fechaHoraForm.get('horaEntrega').valid && fechaHoraForm.get('horaEntrega').touched">Por favor, seleccioná una hora</span>
-                    </mat-error>
-                  </td>
-                </tr>
-                <tr><br></tr>
+                  </tr>
                 </form>
               </table>
             </form>
             <button mat-raised-button matStepperNext
-                    [disabled]="!regiForm.get('direccion').valid || esFechaEspecifica==1 && (!fechaHoraForm.get('fechaEntrega').valid || !fechaHoraForm.get('horaEntrega').valid)">
+                    [disabled]="!regiForm.get('calle').valid || !regiForm.get('numeracion').valid || esYa==0 && (!fechaHoraForm.get('fechaEntrega').valid || !fechaHoraForm.get('horaEntrega').valid)">
               Siguiente
             </button>
           </mat-step>
-
-
           <mat-step label="Pago" [stepControl]="pagosForm">
-            <form [formGroup]="pagosForm" (ngSubmit)="onFormSubmit(pagosForm.value)">
+            <div [formGroup]="pagosForm" (ngSubmit)="onFormSubmit(pagosForm.value)">
               <table>
                 <tr>
                   <td>
                     <mat-form-field>
-                      <mat-select formControlName="formaPago" placeholder="Forma de pago" [(ngModel)]="formaPago"
+                      <mat-select formControlName="formaPago" placeholder="Forma de pago"
                                   (valueChange)="iniciarValidadoresTarjeta($event)">
                         <mat-option>-- Seleccionar --</mat-option>
                         <mat-option value="usaEfectivo">Efectivo</mat-option>
@@ -110,7 +122,7 @@
                   </mat-error>
                   <!--</td>-->
                 </tr>
-                <form [formGroup]="cardForm">
+                <div formGroupName="cardForm">
                   <tr *ngIf="pagosForm.get('formaPago').value=='usaTarjeta'">
 
                     <mat-form-field class="demo-full-width">
@@ -123,7 +135,7 @@
                     <mat-icon color="primary">credit_card</mat-icon>
 
                     <mat-error>
-                      <span *ngIf="!cardForm.get('numeroTarjeta').valid && cardForm.get('numeroTarjeta').touched">Por favor, ingresá el número de tu tarjeta VISA</span>
+                      <span *ngIf="!pagosForm.get('cardForm').get('numeroTarjeta').valid && pagosForm.get('cardForm').get('numeroTarjeta').touched">Por favor, ingresá el número de tu tarjeta VISA</span>
                     </mat-error>
                     <!--</td>-->
                   </tr>
@@ -138,7 +150,7 @@
                     <mat-icon color="primary">perm_identity</mat-icon>
 
                     <mat-error>
-                      <span *ngIf="!cardForm.get('nombreTarjeta').valid && cardForm.get('nombreTarjeta').touched">Por favor, ingresá el nombre como figura en la tarjeta</span>
+                      <span *ngIf="!pagosForm.get('cardForm').get('nombreTarjeta').valid && pagosForm.get('cardForm').get('nombreTarjeta').touched">Por favor, ingresá el nombre como figura en la tarjeta</span>
                     </mat-error>
                   </tr>
                   <tr *ngIf="pagosForm.get('formaPago').value=='usaTarjeta'">
@@ -153,7 +165,7 @@
                     <mat-icon color="primary">insert_invitation</mat-icon>
 
                     <mat-error>
-                      <span *ngIf="!cardForm.get('fechaExp').valid && cardForm.get('fechaExp').touched">Por favor, ingresá la fecha de expiración de tu tarjeta</span>
+                      <span *ngIf="!pagosForm.get('cardForm').get('fechaExp').valid && pagosForm.get('cardForm').get('fechaExp').touched">Por favor, ingresá la fecha de expiración de tu tarjeta</span>
                     </mat-error>
                     <!--</td>-->
                   </tr>
@@ -168,43 +180,32 @@
                     <mat-icon color="primary">lock_open</mat-icon>
 
                     <mat-error>
-                      <span *ngIf="!cardForm.get('codigoSeg').valid && cardForm.get('codigoSeg').touched">Por favor, ingresá el código de seguridad de tu tarjeta</span>
+                      <span *ngIf="!pagosForm.get('cardForm').get('codigoSeg').valid && pagosForm.get('cardForm').get('codigoSeg').touched">Por favor, ingresá el código de seguridad de tu tarjeta</span>
                     </mat-error>
                     <!--</td>-->
                   </tr>
                   <td colspan="2" class="content-center">
-                    <button mat-raised-button color="accent"
-                            [disabled]="!((cardForm.valid && formaPago==='usaTarjeta') || (pagosForm.get('pagoCon').valid && formaPago==='usaEfectivo'))"
-                            matStepperNext>
+                    <button matStepperNext mat-raised-button color="accent" [disabled]="!pagosForm.get('cardForm').valid || !pagosForm.valid ">
                       Siguiente
                     </button>
                   </td>
 
-                </form>
+                </div>
 
               </table>
-              <!--</form>-->
-              <!--<mat-icon class="material-confirmation-icon">check_circle</mat-icon>-->
-            </form>
+            </div>
           </mat-step>
 
           <mat-step label="Confirmación">
             <form [formGroup]="confirmationForm" (ngSubmit)="onFormSubmit(regiForm.value)">
               <table>
-                <tr>
-                  <td colspan="2">
-                    <mat-slide-toggle formControlName="stepConfirmacionCtrl" (change)="onChanges($event)" required>
-                      Aceptar términos y
-                      condiciones
-                    </mat-slide-toggle>
-                  </td>
-                </tr>
                 <tr><br></tr>
                 <tr>
                   <b>Envío</b>
                 </tr>
-                <tr><i>Dirección: </i>{{regiForm.get('direccion').value}}</tr>
-                <tr *ngIf="esFechaEspecifica == 1">
+                <tr><i>Dirección: </i>{{regiForm.get('calle').value}} {{regiForm.get('numeracion').value}} {{regiForm.get('piso').value}} {{regiForm.get('dpto').value}}
+                </tr>
+                <tr *ngIf="esYa == 0">
                   <i>Fecha: </i>{{fechaHoraForm.get('fechaEntrega').value | date:'MM/dd/yyyy'}}
                   <br><i>Hora: </i>{{fechaHoraForm.get('horaEntrega').value}}<br>
                 </tr>
@@ -216,7 +217,14 @@
                   <br>
                     <i>Tu vuelto: </i>${{pagosForm.get('pagoCon').value - getTotalCost()}}
                   </span>
-                  <span *ngIf="pagosForm.get('formaPago').value == 'usaTarjeta'">Tarjeta de crédito</span>
+                  <span *ngIf="pagosForm.get('formaPago').value == 'usaTarjeta'">Tarjeta de crédito VISA
+                    <br>
+                    <i>Número Tarjeta: </i>{{pagosForm.get('cardForm').get('numeroTarjeta').value}}
+                    <br>
+                    <i>Titular: </i>{{pagosForm.get('cardForm').get('nombreTarjeta').value}}
+                    <br>
+                    <i>Monto: $</i>{{getTotalCost()}}
+                  </span>
 
                 </tr>
                 <tr><br></tr>
@@ -225,26 +233,20 @@
                   <td colspan="2" class="content-center">
                     <button mat-raised-button color="accent"
                             (click)="openSnackBar()"
-                            [disabled]="!regiForm.valid || (!cardForm.valid && formaPago==='usaTarjeta') || isAccepted==0"
+                            [disabled]="!regiForm.valid || (!pagosForm.controls.cardForm.valid && formaPago==='usaTarjeta')"
                             matStepperNext>
                       Confirmar Pedido
                     </button>
-
-
-
                   </td>
-                </tr>
-                <tr>
                 </tr>
               </table>
             </form>
-
 
           </mat-step>
 
         </mat-vertical-stepper>
       </mat-grid-tile>
-      <mat-grid-tile [colspan]="4" [rowspan]="2">
+      <mat-grid-tile [colspan]="3" [rowspan]="2">
         <mat-card class="example-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>

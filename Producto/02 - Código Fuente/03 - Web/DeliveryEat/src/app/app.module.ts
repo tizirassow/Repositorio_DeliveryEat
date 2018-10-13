@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutModule} from '@angular/cdk/layout';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material/material.module';
 import { AgmCoreModule } from '@agm/core';
@@ -37,5 +36,6 @@ import {DetallePedidoComponent, ConfirmacionComponent} from './pedido/detalle-pe
   entryComponents: [PedidoComponent, ConfirmacionComponent]
 
 })
+
 export class AppModule {
 }

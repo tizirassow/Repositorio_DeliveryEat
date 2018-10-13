@@ -5,8 +5,9 @@ const url = require("url");
 let win;
 
 function createWindow() {
-  win = new BrowserWindow({ width: 800, height: 600 });
+  win = new BrowserWindow({ width: 1366, height: 878 });
   win.maximize();
+  win.setResizable(false);
 
   // load the dist folder from Angular
   win.loadURL(
