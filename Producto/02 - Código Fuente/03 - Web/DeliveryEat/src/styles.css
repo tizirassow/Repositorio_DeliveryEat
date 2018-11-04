@@ -41,7 +41,7 @@ div.container {
 }
 
 .example-header-image {
-  background-image: url("src/app/img/caseratto.jpg");
+  background-image: url("app/img/caseratto.jpg");
   background-size: cover;
 }
 
