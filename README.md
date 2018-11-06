@@ -1,4 +1,4 @@
-# Repositorio DeliveryEat
+# Repositorio DeliverEat
 Repositorio para trabajar en el proyecto de DeliverEat a lo largo de la cátedra de Ingeniería de Software en el curso 4k2.<br>
 
 <b>Grupo 4:<br></b>
